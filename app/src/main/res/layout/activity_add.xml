@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_amber_100"
+    >
+
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/include" />
+
+
+    <TextView
+        android:layout_margin="20dp"
+        android:background="@color/material_amber_100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Inserimento Nota"
+        android:id="@+id/Display_title"
+        android:textSize="30dp"
+        android:layout_below="@+id/include"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="TITOLO NOTA"
+        android:id="@+id/inserisci_titolo"
+        android:layout_below="@+id/Display_title"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="14dp"
+        android:maxLength="20"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/inserisci_scadenza"
+        android:hint="SCADENZA"
+        android:layout_alignBaseline="@id/inserisci_titolo"
+        android:layout_alignBottom="@id/inserisci_titolo"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/inserisci_corpo"
+        android:hint="TESTO"
+        android:layout_below="@id/inserisci_titolo"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="12dp" />
+</RelativeLayout>
