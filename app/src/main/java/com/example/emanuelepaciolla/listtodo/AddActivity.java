@@ -99,7 +99,6 @@ public class AddActivity extends AppCompatActivity {
         intent.putExtra("position", posizione);
         intent.putExtra(REQUEST, REQUEST_EDIT);
         setResult(Activity.RESULT_OK, intent);
-        System.out.println("Sono arrivato qui");
         finish();
     }
     private void deleteNote(){

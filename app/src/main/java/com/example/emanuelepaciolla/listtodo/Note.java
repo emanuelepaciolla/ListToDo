@@ -11,7 +11,14 @@ public class Note {
     private String datascadenza;
     private String datacreazione;
     private String isState = "false";
-    private int id;
+    private long id;
+
+    public Note(int id, String titolo, String testo, String datascadenza) {
+        this.id = id;
+        this.titolo = titolo;
+        this.testo = testo;
+        this.datascadenza = datascadenza;
+    }
 
     public Note(String titolo, String testo, String datascadenza) {
         this.titolo = titolo;
@@ -23,11 +30,11 @@ public class Note {
         datacreazione=x;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

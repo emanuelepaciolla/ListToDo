@@ -20,15 +20,21 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     ArrayList<Note> notes = new ArrayList<>();
     private String POSITION = "POSITION";
 
+
     @Override
     public NoteAdapter.NoteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.nota_card, parent, false);
         return new NoteViewHolder(v);
     }
 
+    public Note getNote(int position) {
+        return notes.get(position);
+    }
+
     public void addNote(Note nota) {
-        notes.add(0, nota);
-        notifyItemChanged(0);
+        notes.add(nota);
+        notifyDataSetChanged();
+
     }
 
     public void updateNote(Note note, int position) {
@@ -38,7 +44,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     public void deleteNote(int position){
         notes.remove(position);
-        notifyItemChanged(position);
+        notifyDataSetChanged();
     }
 
     public void setData(ArrayList<Note> notes) {

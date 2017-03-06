@@ -22,7 +22,7 @@
         android:layout_centerHorizontal="true" />
 
     <EditText
-
+        android:textSize="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="TITOLO NOTA"
