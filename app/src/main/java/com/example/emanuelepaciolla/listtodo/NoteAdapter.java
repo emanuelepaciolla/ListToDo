@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -59,6 +60,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         holder.notecorpo.setText(note.getTesto());
         holder.dataCreazione.setText(note.getDatacreazione());
         holder.datascadenza.setText(note.getDatascadenza());
+        if (notes.get(position).getIsState().equals("false")){
+            holder.star.setVisibility(View.GONE);
+            holder.starblack.setVisibility(View.VISIBLE);
+        } else if (notes.get(position).getIsState().equals("true")){
+            holder.star.setVisibility(View.VISIBLE);
+            holder.starblack.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -68,6 +76,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     class NoteViewHolder extends RecyclerView.ViewHolder {
         TextView notetitolo, notecorpo, dataCreazione, datascadenza;
+        ImageButton star = (ImageButton) itemView.findViewById(R.id.star_preferences);
+        ImageButton starblack = (ImageButton) itemView.findViewById(R.id.star_preferences_black);
 
         NoteViewHolder(View itemView) {
             super(itemView);
@@ -88,6 +98,29 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                     intent.putExtra(Main_Activity.ADD, Main_Activity.edit);
                     ((AppCompatActivity)v.getContext()).startActivityForResult(intent, 10);
                     return false;
+                }
+            });
+
+            star.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int posizione = getAdapterPosition();
+                    if (notes.get(posizione).getIsState().equals("false")){
+                        notes.get(posizione).setIsState("true");
+                        star.setVisibility(View.GONE);
+                        starblack.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+            starblack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int posizione = getAdapterPosition();
+                    if (notes.get(posizione).getIsState().equals("true")){
+                        notes.get(posizione).setIsState("false");
+                        starblack.setVisibility(View.GONE);
+                        star.setVisibility(View.VISIBLE);
+                    }
                 }
             });
         }

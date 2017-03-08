@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabaseLockedException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
@@ -19,10 +20,11 @@ public class Database extends SQLiteOpenHelper {
     private static final String KEY_TITLE = "title";
     private static final String KEY_BODY = "body";
     private static final String KEY_DATE_SCADENZA = "datascadenza";
+    private static final String KEY_IS_SPECIAL = "isSpecial";
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     // Database Name
     private static final String DATABASE_NAME = "notes";
@@ -38,7 +40,7 @@ public class Database extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_NOTE_TABLE = "CREATE TABLE " + TABLE_NOTES + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TITLE + " TEXT,"
-                + KEY_BODY + " TEXT, " + KEY_DATE_SCADENZA + " TEXT " + ")";
+                + KEY_BODY + " TEXT, " + KEY_DATE_SCADENZA + " TEXT," + KEY_IS_SPECIAL + "TEXT" + ")";
         System.out.println(CREATE_NOTE_TABLE);
         db.execSQL(CREATE_NOTE_TABLE);
     }
@@ -58,6 +60,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(KEY_TITLE, note.getTitolo());
         values.put(KEY_BODY, note.getTesto());
         values.put(KEY_DATE_SCADENZA, note.getDatascadenza());
+        values.put(KEY_IS_SPECIAL, note.getIsState());
 
         // Inserting Row
         long ritorno = db.insert(TABLE_NOTES, null, values);
@@ -78,7 +81,6 @@ public class Database extends SQLiteOpenHelper {
             do {
                 Note note = new Note(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3));
                 // Adding note to list
-                System.out.print(cursor.getString(3));
 
                 notesList.add(note);
             } while (cursor.moveToNext());
@@ -103,5 +105,12 @@ public class Database extends SQLiteOpenHelper {
         // updating row
         return db.update(TABLE_NOTES, values, KEY_ID + " = ?",
                 new String[]{String.valueOf(note.getId())});
+    }
+    public int updateSpecial(Note note){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_IS_SPECIAL, note.getIsState());
+
+        return db.update(TABLE_NOTES, values, KEY_ID + " = ?", new String[]{String.valueOf(note.getId())});
     }
 }

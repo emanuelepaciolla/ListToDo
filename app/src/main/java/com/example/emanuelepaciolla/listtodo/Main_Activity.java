@@ -26,7 +26,8 @@ public class Main_Activity extends AppCompatActivity {
 
     NoteAdapter adapter;
     RecyclerView noteRecycleView;
-    LinearLayoutManager layoutManager;
+    RecyclerView.LayoutManager layoutManager;
+    //LinearLayoutManager layoutManager;
 
     final int REQUESTSTARTACTIVITYONRESULT = 10;
     static int add = 1;
@@ -43,8 +44,6 @@ public class Main_Activity extends AppCompatActivity {
         noteRecycleView.setLayoutManager(layoutManager);
         noteRecycleView.setAdapter(adapter);
 
-
-
         FloatingActionButton inseriscinotaBTN = (FloatingActionButton) findViewById(R.id.bottone_inserisci);
         inseriscinotaBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,10 +53,8 @@ public class Main_Activity extends AppCompatActivity {
                 startActivityForResult(i, REQUESTSTARTACTIVITYONRESULT);
             }
         });
-
         D = new Database(this);
         adapter.setData(D.getAllNotes());
-
     }
 
     @Override
@@ -74,14 +71,15 @@ public class Main_Activity extends AppCompatActivity {
             nota.setTitolo(data.getStringExtra("Titolo"));
             nota.setTesto(data.getStringExtra("Testo"));
             nota.setDatascadenza(data.getStringExtra("Scadenza"));
-            System.out.println(posizione);
             D.updateNote(nota);
             adapter.updateNote( nota, posizione);
         } else if (resultCode == Activity.RESULT_OK && data.getIntExtra(AddActivity.REQUEST, -1) == AddActivity.REQUEST_DELETE){
             int posizione = data.getIntExtra("position", -1);
-            System.out.println(posizione + "Sto nella richiesta di eliminazione");
             D.deleteNote(adapter.getNote(posizione));
             adapter.deleteNote(posizione);
         }
+    }
+    public void updateIsState(Note nota){
+        D.updateSpecial(nota);
     }
 }

@@ -18,6 +18,10 @@ public class Note {
         this.titolo = titolo;
         this.testo = testo;
         this.datascadenza = datascadenza;
+        Date date= Calendar.getInstance().getTime();
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String x = format.format(date);
+        datacreazione=x;
     }
 
     public Note(String titolo, String testo, String datascadenza) {
