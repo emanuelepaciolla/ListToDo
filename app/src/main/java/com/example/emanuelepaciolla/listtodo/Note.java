@@ -12,6 +12,7 @@ public class Note {
     private String datacreazione;
     private String isState;
     private long id;
+    private String color;
 
     public Note(int id, String titolo, String testo, String datascadenza) {
         this.id = id;
@@ -23,6 +24,7 @@ public class Note {
         String x = format.format(date);
         datacreazione=x;
         isState = "false";
+        color = "Amber";
     }
 
     public Note(String titolo, String testo, String datascadenza) {
@@ -34,6 +36,15 @@ public class Note {
         String x = format.format(date);
         datacreazione=x;
         isState = "false";
+        color = "Amber";
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public Note() {

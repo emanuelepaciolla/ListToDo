@@ -2,9 +2,12 @@ package com.example.emanuelepaciolla.listtodo;
 
 import android.accounts.AccountManager;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -20,6 +23,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     ArrayList<Note> notes = new ArrayList<>();
     private String POSITION = "POSITION";
+
 
 
     @Override
@@ -67,6 +71,18 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             holder.star.setVisibility(View.GONE);
             holder.starblack.setVisibility(View.VISIBLE);
         }
+        int color;
+        switch (notes.get(position).getColor()){
+            case "Green":
+                ((holder.itemView)).setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.green_note));  //green
+                break;
+            case "Blue":
+                ((holder.itemView)).setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.blue_note));  //blue
+               break;
+            case "Red":
+                ((holder.itemView)).setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.red_note));  //red
+                break;
+        }
     }
 
     @Override
@@ -74,18 +90,36 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         return notes.size();
     }
 
-    class NoteViewHolder extends RecyclerView.ViewHolder {
+    class NoteViewHolder extends RecyclerView.ViewHolder{
         TextView notetitolo, notecorpo, dataCreazione, datascadenza;
         ImageButton star = (ImageButton) itemView.findViewById(R.id.star_preferences);
         ImageButton starblack = (ImageButton) itemView.findViewById(R.id.star_preferences_black);
         ImageButton color = (ImageButton) itemView.findViewById(R.id.palette_color);
-
-        NoteViewHolder(View itemView) {
+        NoteViewHolder(final View itemView)   {
             super(itemView);
             notetitolo = (TextView) itemView.findViewById(R.id.idtitolonotacard);
             notecorpo = (TextView) itemView.findViewById(R.id.idcorpocard);
             dataCreazione = (TextView) itemView.findViewById(R.id.idcreazionecard);
             datascadenza = (TextView) itemView.findViewById(R.id.datascadenzacard);
+            color.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if ((notes.get(getAdapterPosition())).getColor().equals("Amber")){
+                        ((itemView)).setBackgroundColor(v.getContext().getResources().getColor(R.color.green_note));  //green
+                        notes.get(getAdapterPosition()).setColor("Green");
+                    } else if ((notes.get(getAdapterPosition())).getColor().equals("Green")){
+                        ((itemView)).setBackgroundColor(v.getContext().getResources().getColor(R.color.blue_note));  //Blue
+                        notes.get(getAdapterPosition()).setColor("Blue");
+                    } else if ((notes.get(getAdapterPosition())).getColor().equals("Blue")) {
+                        ((itemView)).setBackgroundColor(v.getContext().getResources().getColor(R.color.red_note)); //Red
+                        notes.get(getAdapterPosition()).setColor("Red");
+                    } else if ((notes.get(getAdapterPosition())).getColor().equals("Red")) {
+                        ((itemView)).setBackgroundColor(v.getContext().getResources().getColor(R.color.nota_base));  //Amber
+                        notes.get(getAdapterPosition()).setColor("Amber");
+                    }
+                    ((Main_Activity)v.getContext()).D.updateNote(notes.get(getAdapterPosition()));
+                }
+            });
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {

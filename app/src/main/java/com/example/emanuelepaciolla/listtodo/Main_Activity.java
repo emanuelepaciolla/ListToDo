@@ -65,8 +65,8 @@ public class Main_Activity extends AppCompatActivity {
             long x = D.addNote(nota);
             nota.setId(x);
             adapter.addNote(nota);
-        } else {
-            Toast.makeText(this,"Non puoi inserire campi vuoti", Toast.LENGTH_LONG).show();
+        } else if ((resultCode == Activity.RESULT_OK && data.getIntExtra(AddActivity.REQUEST, -1) == AddActivity.REQUEST_ADD) && (data.getStringExtra("Titolo").equals("") || data.getStringExtra("Testo").equals("") || data.getStringExtra("Scadenza").equals(""))) {
+            Toast.makeText(this,"Non puoi inserire campi vuoti", Toast.LENGTH_SHORT).show();
         } if (resultCode == Activity.RESULT_OK && data.getIntExtra(AddActivity.REQUEST, -1) == AddActivity.REQUEST_EDIT && !data.getStringExtra("Titolo").equals("") && !data.getStringExtra("Testo").equals("") && !data.getStringExtra("Scadenza").equals("")){
             int posizione = data.getIntExtra("position", -1);
             Note nota = adapter.getNote(posizione);
@@ -75,14 +75,11 @@ public class Main_Activity extends AppCompatActivity {
             nota.setDatascadenza(data.getStringExtra("Scadenza"));
             D.updateNote(nota);
             adapter.updateNote( nota, posizione);
-        } else { Toast.makeText(this,"Non puoi inserire campi vuoti", Toast.LENGTH_LONG).show();}
+        } else  if ((resultCode == Activity.RESULT_OK && data.getIntExtra(AddActivity.REQUEST, -1) == AddActivity.REQUEST_EDIT) && (data.getStringExtra("Titolo").equals("") || data.getStringExtra("Testo").equals("") || data.getStringExtra("Scadenza").equals(""))) { Toast.makeText(this,"Non puoi inserire campi vuoti", Toast.LENGTH_LONG).show();}
         if (resultCode == Activity.RESULT_OK && data.getIntExtra(AddActivity.REQUEST, -1) == AddActivity.REQUEST_DELETE){
             int posizione = data.getIntExtra("position", -1);
             D.deleteNote(adapter.getNote(posizione));
             adapter.deleteNote(posizione);
         }
-    }
-    public void updateIsState(Note nota){
-        D.updateSpecial(nota);
     }
 }

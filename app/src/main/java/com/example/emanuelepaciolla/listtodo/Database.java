@@ -21,10 +21,11 @@ public class Database extends SQLiteOpenHelper {
     private static final String KEY_BODY = "body";
     private static final String KEY_DATE_SCADENZA = "datascadenza";
     private static final String KEY_IS_SPECIAL = "isSpecial";
+    private static final String KEY_COLOR = "Color";
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
 
     // Database Name
     private static final String DATABASE_NAME = "notes";
@@ -40,7 +41,7 @@ public class Database extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_NOTE_TABLE = "CREATE TABLE " + TABLE_NOTES + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TITLE + " TEXT,"
-                + KEY_BODY + " TEXT, " + KEY_DATE_SCADENZA + " TEXT, " + KEY_IS_SPECIAL + " TEXT " + ")";
+                + KEY_BODY + " TEXT, " + KEY_DATE_SCADENZA + " TEXT, " + KEY_IS_SPECIAL + " TEXT, " + KEY_COLOR + " TEXT " + ")";
         System.out.println(CREATE_NOTE_TABLE);
         db.execSQL(CREATE_NOTE_TABLE);
     }
@@ -61,6 +62,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(KEY_BODY, note.getTesto());
         values.put(KEY_DATE_SCADENZA, note.getDatascadenza());
         values.put(KEY_IS_SPECIAL, note.getIsState());
+        values.put(KEY_COLOR, note.getColor());
 
         // Inserting Row
         long ritorno = db.insert(TABLE_NOTES, null, values);
@@ -83,6 +85,7 @@ public class Database extends SQLiteOpenHelper {
                 // Adding note to list
                 System.out.println(note);
                 note.setIsState(cursor.getString(4));
+                note.setColor(cursor.getString(5));
                 System.out.println("Valore " + cursor.getString(4));
                 notesList.add(note);
 
@@ -105,6 +108,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(KEY_BODY, note.getTesto());
         values.put(KEY_DATE_SCADENZA, note.getDatascadenza());
         values.put(KEY_IS_SPECIAL, note.getIsState());
+        values.put(KEY_COLOR, note.getColor());
         // updating row
 
         System.out.println("Valore della query" + values);
