@@ -23,6 +23,11 @@
             android:paddingTop="15dp"
             android:layout_weight="9"/>
         <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="46dp"
+            android:background="@drawable/palette"
+            android:id="@+id/palette_color"/>
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="46dp"
             android:background="@drawable/ic_star_border_black_24dp"

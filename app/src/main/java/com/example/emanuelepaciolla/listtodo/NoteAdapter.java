@@ -61,11 +61,11 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         holder.dataCreazione.setText(note.getDatacreazione());
         holder.datascadenza.setText(note.getDatascadenza());
         if (notes.get(position).getIsState().equals("false")){
-            holder.star.setVisibility(View.GONE);
-            holder.starblack.setVisibility(View.VISIBLE);
-        } else if (notes.get(position).getIsState().equals("true")){
             holder.star.setVisibility(View.VISIBLE);
             holder.starblack.setVisibility(View.GONE);
+        } else if (notes.get(position).getIsState().equals("true")){
+            holder.star.setVisibility(View.GONE);
+            holder.starblack.setVisibility(View.VISIBLE);
         }
     }
 
@@ -78,6 +78,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         TextView notetitolo, notecorpo, dataCreazione, datascadenza;
         ImageButton star = (ImageButton) itemView.findViewById(R.id.star_preferences);
         ImageButton starblack = (ImageButton) itemView.findViewById(R.id.star_preferences_black);
+        ImageButton color = (ImageButton) itemView.findViewById(R.id.palette_color);
 
         NoteViewHolder(View itemView) {
             super(itemView);
@@ -109,6 +110,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                         notes.get(posizione).setIsState("true");
                         star.setVisibility(View.GONE);
                         starblack.setVisibility(View.VISIBLE);
+                        Note nota = notes.get(posizione);
+                        System.out.println(nota);
+                        ((Main_Activity)v.getContext()).D.updateNote(nota);
                     }
                 }
             });
@@ -120,6 +124,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                         notes.get(posizione).setIsState("false");
                         starblack.setVisibility(View.GONE);
                         star.setVisibility(View.VISIBLE);
+                        Note nota = notes.get(posizione);
+                        System.out.println(nota);
+                        ((Main_Activity)v.getContext()).D.updateNote(nota);
                     }
                 }
             });

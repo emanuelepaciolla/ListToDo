@@ -10,7 +10,7 @@ public class Note {
     private String testo="";
     private String datascadenza;
     private String datacreazione;
-    private String isState = "false";
+    private String isState;
     private long id;
 
     public Note(int id, String titolo, String testo, String datascadenza) {
@@ -22,6 +22,7 @@ public class Note {
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         String x = format.format(date);
         datacreazione=x;
+        isState = "false";
     }
 
     public Note(String titolo, String testo, String datascadenza) {
@@ -32,6 +33,10 @@ public class Note {
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         String x = format.format(date);
         datacreazione=x;
+        isState = "false";
+    }
+
+    public Note() {
     }
 
     public long getId() {
@@ -90,5 +95,17 @@ public class Note {
 
     public void setDatascadenza(String datascadenza) {
         this.datascadenza = datascadenza;
+    }
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "titolo='" + titolo + '\'' +
+                ", testo='" + testo + '\'' +
+                ", datascadenza='" + datascadenza + '\'' +
+                ", datacreazione='" + datacreazione + '\'' +
+                ", isState='" + isState + '\'' +
+                ", id=" + id +
+                '}';
     }
 }

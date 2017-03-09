@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
+import android.widget.Toast;
 
 
 /**
@@ -60,12 +60,14 @@ public class Main_Activity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && data.getIntExtra(AddActivity.REQUEST, -1) == AddActivity.REQUEST_ADD){
+        if (resultCode == Activity.RESULT_OK && data.getIntExtra(AddActivity.REQUEST, -1) == AddActivity.REQUEST_ADD && !data.getStringExtra("Titolo").equals("") && !data.getStringExtra("Testo").equals("") && !data.getStringExtra("Scadenza").equals("")){
             Note nota = new Note(data.getStringExtra("Titolo"), data.getStringExtra("Testo"), data.getStringExtra("Scadenza"));
             long x = D.addNote(nota);
             nota.setId(x);
             adapter.addNote(nota);
-        } else if (resultCode == Activity.RESULT_OK && data.getIntExtra(AddActivity.REQUEST, -1) == AddActivity.REQUEST_EDIT){
+        } else {
+            Toast.makeText(this,"Non puoi inserire campi vuoti", Toast.LENGTH_LONG).show();
+        } if (resultCode == Activity.RESULT_OK && data.getIntExtra(AddActivity.REQUEST, -1) == AddActivity.REQUEST_EDIT && !data.getStringExtra("Titolo").equals("") && !data.getStringExtra("Testo").equals("") && !data.getStringExtra("Scadenza").equals("")){
             int posizione = data.getIntExtra("position", -1);
             Note nota = adapter.getNote(posizione);
             nota.setTitolo(data.getStringExtra("Titolo"));
@@ -73,7 +75,8 @@ public class Main_Activity extends AppCompatActivity {
             nota.setDatascadenza(data.getStringExtra("Scadenza"));
             D.updateNote(nota);
             adapter.updateNote( nota, posizione);
-        } else if (resultCode == Activity.RESULT_OK && data.getIntExtra(AddActivity.REQUEST, -1) == AddActivity.REQUEST_DELETE){
+        } else { Toast.makeText(this,"Non puoi inserire campi vuoti", Toast.LENGTH_LONG).show();}
+        if (resultCode == Activity.RESULT_OK && data.getIntExtra(AddActivity.REQUEST, -1) == AddActivity.REQUEST_DELETE){
             int posizione = data.getIntExtra("position", -1);
             D.deleteNote(adapter.getNote(posizione));
             adapter.deleteNote(posizione);

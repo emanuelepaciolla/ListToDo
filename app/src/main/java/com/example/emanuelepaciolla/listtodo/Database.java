@@ -24,7 +24,7 @@ public class Database extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 8;
 
     // Database Name
     private static final String DATABASE_NAME = "notes";
@@ -40,7 +40,7 @@ public class Database extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_NOTE_TABLE = "CREATE TABLE " + TABLE_NOTES + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TITLE + " TEXT,"
-                + KEY_BODY + " TEXT, " + KEY_DATE_SCADENZA + " TEXT," + KEY_IS_SPECIAL + "TEXT" + ")";
+                + KEY_BODY + " TEXT, " + KEY_DATE_SCADENZA + " TEXT, " + KEY_IS_SPECIAL + " TEXT " + ")";
         System.out.println(CREATE_NOTE_TABLE);
         db.execSQL(CREATE_NOTE_TABLE);
     }
@@ -81,8 +81,11 @@ public class Database extends SQLiteOpenHelper {
             do {
                 Note note = new Note(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3));
                 // Adding note to list
-
+                System.out.println(note);
+                note.setIsState(cursor.getString(4));
+                System.out.println("Valore " + cursor.getString(4));
                 notesList.add(note);
+
             } while (cursor.moveToNext());
         }
 
@@ -92,7 +95,6 @@ public class Database extends SQLiteOpenHelper {
 
     public void deleteNote(Note note) {
         SQLiteDatabase db = this.getWritableDatabase();
-        System.out.println(note.getId() + " Questo e' l'id");
         db.delete(TABLE_NOTES, KEY_ID + "= ?", new String[]{String.valueOf(note.getId())});
         db.close();
     }
@@ -102,15 +104,22 @@ public class Database extends SQLiteOpenHelper {
         values.put(KEY_TITLE, note.getTitolo());
         values.put(KEY_BODY, note.getTesto());
         values.put(KEY_DATE_SCADENZA, note.getDatascadenza());
+        values.put(KEY_IS_SPECIAL, note.getIsState());
         // updating row
+
+        System.out.println("Valore della query" + values);
         return db.update(TABLE_NOTES, values, KEY_ID + " = ?",
                 new String[]{String.valueOf(note.getId())});
     }
+
+
+
     public int updateSpecial(Note note){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_IS_SPECIAL, note.getIsState());
 
-        return db.update(TABLE_NOTES, values, KEY_ID + " = ?", new String[]{String.valueOf(note.getId())});
+        return db.update(TABLE_NOTES, values, KEY_ID + " = ?",
+                new String[]{String.valueOf(note.getId())});
     }
 }
